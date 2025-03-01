@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detecção de Glaucoma Infantil 🤖👀</title>
+    <style>
+        /* Fundo com várias imagens do carinho com óculos */
+        body {
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+            background-image: url("{{ url_for('static', filename='logo.jpg') }}");
+            background-size: 150px 150px;
+            background-repeat: repeat;
+            background-position: top left;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 100%; /* A largura máxima é 100% da tela */
+            width: 100%;
+            box-sizing: border-box; /* Inclui padding e borda na largura total */
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            margin-top: 50px;
+        }
+
+        h2 {
+            color: #FF4081; /* Rosa vibrante */
+        }
+
+        .upload-area {
+            border: 2px dashed #64B5F6;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            background: #BBDEFB;
+        }
+
+        input[type="file"] {
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button {
+            margin-top: 15px;
+            background: #FFD600; /* Amarelo vibrante */
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background: #FFAB00; /* Amarelo mais forte */
+        }
+
+        .image-container {
+            margin-top: 20px;
+        }
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #1E88E5; /* Azul vibrante */
+            font-weight: bold;
+        }
+
+        .robot {
+            width: 100px;
+            margin-bottom: 10px;
+        }
+
+        /* Ajuste para a previsão */
+        .prediction-container {
+            width: 100%; /* Ocupa toda a largura da tela */
+            max-width: 100%; /* Garante que não ultrapasse a largura da tela */
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+            border-radius: 15px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden; /* Evita que o conteúdo transborde */
+        }
+
+        /* Responsividade para telas pequenas */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .upload-area {
+                padding: 15px;
+            }
+
+            button {
+                padding: 8px 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="https://cdn-icons-png.flaticon.com/512/483/483985.png" alt="Robô IA" class="robot">
+        <h2>👀 IA Médica Infantil 🤖</h2>
+        <p>Carregue uma imagem do olho para a IA analisar! 📷</p>
+
+        <div class="upload-area">
+            <form action="/" method="post" enctype="multipart/form-data">
+                <input type="file" name="file" required>
+                <br>
+                <button type="submit">📤 Enviar Imagem</button>
+            </form>
+        </div>
+
+        {% if image_path %}
+            <div class="image-container">
+                <h3>📸 Imagem Carregada:</h3>
+                <img src="{{ image_path }}" alt="Imagem enviada">
+            </div>
+
+            <div class="prediction-container">
+                <h3>🔍 Resultado da IA:</h3>
+                <p>{{ prediction }}</p>
+            </div>
+        {% endif %}
+    </div>
+
+</body>
+</html>
