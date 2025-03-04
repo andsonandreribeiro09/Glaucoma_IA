@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Detecção de Glaucoma Infantil 🤖👀</title>
+    <title>Detecção de Glaucoma Ophthalmology 🤖👀</title>
     <style>
         /* Fundo holográfico animado */
         body {
@@ -94,6 +94,21 @@
             filter: drop-shadow(0 0 10px #00eaff);
         }
 
+        .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #00eaff;
+            font-size: 18px;
+            text-align: center;
+            border-radius: 10px 10px 0 0;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
+        }
+
+
         @media (max-width: 768px) {
             .container {
                 width: 90%;
@@ -113,7 +128,7 @@
             <form action="/" method="post" enctype="multipart/form-data">
                 <input type="file" name="file" required>
                 <br>
-                <button type="submit">📤 Enviar Imagem</button>
+                <button type="submit">📤 Analisar Imagem</button>
             </form>
         </div>
 
@@ -130,6 +145,11 @@
         {% endif %}
     </div>
 
+    <div class="footer">
+        © 2024 ADW Startup. Todos os direitos reservados.
+    </div>
+
 </body>
 </html>
+
 
