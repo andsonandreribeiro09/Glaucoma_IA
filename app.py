@@ -17,12 +17,12 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Certifique-se de que a pasta de uploads existe
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-# Caminho do modelo salvo
-model_path = "vgg16_glaucoma_classifier_v2.h5"
-model = tf.keras.models.load_model(model_path)
+# Caminho do modelo salvo (modelo TFLite)
+model_path = "vgg16_glaucoma_classifier_v2.tflite"
 
-# Verificar a ordem das classes no modelo treinado
-class_indices = model.input_shape  # Alternativamente, pode ser extraído do gerador usado no treinamento
+# Carregar o modelo TFLite usando a API do TensorFlow Lite
+interpreter = tf.lite.Interpreter(model_path=model_path)
+interpreter.allocate_tensors()
 
 # Função para verificar se a extensão do arquivo é válida
 def allowed_file(filename):
@@ -36,15 +36,29 @@ def preprocess_image(image_path, target_size=(224, 224)):
     img_array = np.expand_dims(img_array, axis=0)  # Adiciona batch
     return img_array
 
+# Função para fazer a previsão com o modelo TFLite
 def predict_image(img_path):
     img_array = preprocess_image(img_path)
-    prediction = model.predict(img_array)
+
+    # Obter os detalhes de entrada e saída do modelo
+    input_details = interpreter.get_input_details()
+    output_details = interpreter.get_output_details()
+
+    # Atribuindo a entrada do modelo
+    input_data = np.array(img_array, dtype=np.float32)
+    interpreter.set_tensor(input_details[0]['index'], input_data)
+
+    # Executando a inferência
+    interpreter.invoke()
+
+    # Obtendo a saída da previsão
+    output_data = interpreter.get_tensor(output_details[0]['index'])
 
     # Imprimir as probabilidades da previsão para depuração
-    print(f"Probabilidades da previsão: {prediction}")
+    print(f"Probabilidades da previsão: {output_data}")
 
     # Se a saída for uma previsão binária, pode ser necessário ajustar o índice de acordo com a classe
-    predicted_class = "glaucoma" if prediction[0][0] < 0.5 else "normal"
+    predicted_class = "glaucoma" if output_data[0][0] < 0.5 else "normal"
     return f"Imagem classificada como: {predicted_class.upper()}"
 
 # Rota principal para upload e visualização
@@ -73,4 +87,4 @@ def upload_file():
 
 # Executar a aplicação
 if __name__ == "__main__":
-    app.run()
+    app.run(debug=False)
