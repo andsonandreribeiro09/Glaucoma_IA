@@ -5,110 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Detecção de Glaucoma Infantil 🤖👀</title>
     <style>
-        /* Fundo com várias imagens do carinho com óculos */
+        /* Fundo holográfico animado */
         body {
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Orbitron', sans-serif;
             text-align: center;
-            background-image: url("{{ url_for('static', filename='logo.jpg') }}");
-            background-size: 150px 150px;
-            background-repeat: repeat;
-            background-position: top left;
             margin: 0;
             padding: 0;
+            background: linear-gradient(45deg, #0d1b2a, #1b263b, #415a77);
+            background-size: 300% 300%;
+            animation: gradientBG 6s ease infinite;
+            color: #ffffff;
+            font-size: 18px;
+        }
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .container {
-            max-width: 100%; /* A largura máxima é 100% da tela */
-            width: 100%;
-            box-sizing: border-box; /* Inclui padding e borda na largura total */
-            margin: 0 auto;
+            max-width: 90%;
+            width: 500px;
+            margin: 50px auto;
             padding: 20px;
-            background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
+            background: rgba(255, 255, 255, 0.1);
             border-radius: 15px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-            margin-top: 50px;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.7);
+            backdrop-filter: blur(10px);
+            font-size: 20px;
         }
 
         h2 {
-            color: #FF4081; /* Rosa vibrante */
+            color: #00eaff;
+            text-shadow: 0 0 10px #00eaff;
+            font-size: 28px;
         }
 
         .upload-area {
-            border: 2px dashed #64B5F6;
+            border: 2px dashed #00eaff;
             padding: 20px;
             border-radius: 10px;
-            margin-top: 20px;
-            background: #BBDEFB;
+            background: rgba(0, 238, 255, 0.2);
+            transition: 0.3s;
+            font-size: 20px;
+        }
+
+        .upload-area:hover {
+            box-shadow: 0 0 10px #00eaff;
         }
 
         input[type="file"] {
-            font-size: 16px;
+            font-size: 20px;
             cursor: pointer;
+            color: #ffffff;
         }
 
         button {
             margin-top: 15px;
-            background: #FFD600; /* Amarelo vibrante */
+            background: #00eaff;
             border: none;
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 22px;
             cursor: pointer;
             border-radius: 10px;
             font-weight: bold;
+            color: #000;
             transition: 0.3s;
+            box-shadow: 0 0 15px #00eaff;
         }
 
         button:hover {
-            background: #FFAB00; /* Amarelo mais forte */
+            background: #0088aa;
+            box-shadow: 0 0 20px #00eaff;
         }
 
-        .image-container {
+        .image-container, .prediction-container {
             margin-top: 20px;
-        }
-
-        img {
-            max-width: 100%;
-            height: auto;
+            background: rgba(255, 255, 255, 0.1);
+            padding: 15px;
             border-radius: 10px;
-        }
-
-        .result {
-            margin-top: 20px;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+            backdrop-filter: blur(8px);
             font-size: 20px;
-            color: #1E88E5; /* Azul vibrante */
-            font-weight: bold;
         }
 
         .robot {
             width: 100px;
-            margin-bottom: 10px;
+            filter: drop-shadow(0 0 10px #00eaff);
         }
 
-        /* Ajuste para a previsão */
-        .prediction-container {
-            width: 100%; /* Ocupa toda a largura da tela */
-            max-width: 100%; /* Garante que não ultrapasse a largura da tela */
-            padding: 10px;
-            box-sizing: border-box;
-            margin-top: 20px;
-            background: rgba(255, 255, 255, 0.8); /* Fundo semi-transparente */
-            border-radius: 15px;
-            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
-            overflow: hidden; /* Evita que o conteúdo transborde */
-        }
-
-        /* Responsividade para telas pequenas */
         @media (max-width: 768px) {
             .container {
+                width: 90%;
                 padding: 10px;
-            }
-
-            .upload-area {
-                padding: 15px;
-            }
-
-            button {
-                padding: 8px 16px;
             }
         }
     </style>
@@ -131,7 +120,7 @@
         {% if image_path %}
             <div class="image-container">
                 <h3>📸 Imagem Carregada:</h3>
-                <img src="{{ image_path }}" alt="Imagem enviada">
+                <img src="{{ image_path }}" alt="Imagem enviada" style="max-width: 100%; border-radius: 10px;">
             </div>
 
             <div class="prediction-container">
@@ -143,3 +132,4 @@
 
 </body>
 </html>
+
